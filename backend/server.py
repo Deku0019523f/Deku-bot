@@ -134,7 +134,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Affiche l'aide."""
     help_text = '''
-🤖 **Commandes disponibles:**
+ROBOT **Commandes disponibles:**
 
 /start - Commencer
 /help - Afficher cette aide
