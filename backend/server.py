@@ -44,12 +44,8 @@ class BotTemplate(BaseModel):
     features: List[str]
     created_at: datetime
 
-# Bot code templates
-BOT_TEMPLATES = {
-    "echo": {
-        "name": "Bot Echo Simple",
-        "description": "Bot qui répète tous les messages reçus",
-        "code": '''import os
+def get_echo_template():
+    return """import os
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
@@ -63,14 +59,14 @@ logger = logging.getLogger(__name__)
 
 # Fonction pour la commande /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Envoie un message de bienvenue quand la commande /start est utilisée."""
+    \"\"\"Envoie un message de bienvenue quand la commande /start est utilisée.\"\"\"
     await update.message.reply_text(
         'Salut ! Je suis un bot echo. Envoyez-moi un message et je le répéterai !'
     )
 
 # Fonction pour la commande /help
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Envoie un message d'aide quand la commande /help est utilisée."""
+    \"\"\"Envoie un message d'aide quand la commande /help est utilisée.\"\"\"
     await update.message.reply_text(
         'Commandes disponibles:\\n'
         '/start - Commencer\\n'
@@ -80,12 +76,12 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 # Fonction pour répéter les messages
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Répète le message de l'utilisateur."""
+    \"\"\"Répète le message de l'utilisateur.\"\"\"
     await update.message.reply_text(f"Vous avez dit: {update.message.text}")
 
 # Fonction principale
 def main() -> None:
-    """Démarre le bot."""
+    \"\"\"Démarre le bot.\"\"\"
     # Remplacez 'YOUR_BOT_TOKEN' par votre token de bot
     TOKEN = os.getenv('{token_var}', 'YOUR_BOT_TOKEN')
     
@@ -103,13 +99,10 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-''',
-        "features": ["echo", "commands"]
-    },
-    "commands": {
-        "name": "Bot avec Commandes",
-        "description": "Bot avec plusieurs commandes personnalisées",
-        "code": '''import os
+"""
+
+def get_commands_template():
+    return """import os
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
@@ -123,7 +116,7 @@ logger = logging.getLogger(__name__)
 
 # Fonction pour la commande /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Commande de démarrage."""
+    \"\"\"Commande de démarrage.\"\"\"
     user = update.effective_user
     await update.message.reply_text(
         f'Salut {user.first_name} ! 👋\\n'
@@ -132,7 +125,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Fonction pour la commande /help
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Affiche l'aide."""
+    \"\"\"Affiche l'aide.\"\"\"
     help_text = '''
 ROBOT **Commandes disponibles:**
 
@@ -149,7 +142,7 @@ Envoyez-moi un message et je vous répondrai !
 
 # Fonction pour la commande /info
 async def info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Affiche les informations du bot."""
+    \"\"\"Affiche les informations du bot.\"\"\"
     await update.message.reply_text(
         '📊 **Informations du bot:**\\n'
         '• Version: 1.0.0\\n'
@@ -161,14 +154,14 @@ async def info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Fonction pour la commande /time
 async def time_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Affiche l'heure actuelle."""
+    \"\"\"Affiche l'heure actuelle.\"\"\"
     from datetime import datetime
     now = datetime.now().strftime("%H:%M:%S - %d/%m/%Y")
     await update.message.reply_text(f"🕐 Heure actuelle: {now}")
 
 # Fonction pour la commande /echo
 async def echo_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Répète le message fourni."""
+    \"\"\"Répète le message fourni.\"\"\"
     if context.args:
         message = ' '.join(context.args)
         await update.message.reply_text(f"🔊 Echo: {message}")
@@ -177,12 +170,12 @@ async def echo_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 # Fonction pour la commande /ping
 async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Teste la connexion."""
+    \"\"\"Teste la connexion.\"\"\"
     await update.message.reply_text("🏓 Pong! Bot en ligne.")
 
 # Fonction pour gérer les messages text
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Gère les messages texte."""
+    \"\"\"Gère les messages texte.\"\"\"
     message = update.message.text.lower()
     
     responses = {
@@ -204,7 +197,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 # Fonction principale
 def main() -> None:
-    """Démarre le bot."""
+    \"\"\"Démarre le bot.\"\"\"
     TOKEN = os.getenv('{token_var}', 'YOUR_BOT_TOKEN')
     
     # Créer l'application
@@ -227,13 +220,10 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-''',
-        "features": ["commands", "responses"]
-    },
-    "buttons": {
-        "name": "Bot avec Boutons Inline",
-        "description": "Bot avec boutons interactifs",
-        "code": '''import os
+"""
+
+def get_buttons_template():
+    return """import os
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
@@ -247,7 +237,7 @@ logger = logging.getLogger(__name__)
 
 # Fonction pour la commande /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Commande de démarrage avec boutons."""
+    \"\"\"Commande de démarrage avec boutons.\"\"\"
     keyboard = [
         [InlineKeyboardButton("📊 Informations", callback_data='info')],
         [InlineKeyboardButton("🎮 Jeux", callback_data='games'),
@@ -257,7 +247,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     await update.message.reply_text(
-        '🤖 **Bienvenue !**\\n'
+        'ROBOT **Bienvenue !**\\n'
         'Choisissez une option ci-dessous:',
         reply_markup=reply_markup,
         parse_mode='Markdown'
@@ -265,7 +255,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Fonction pour la commande /menu
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Affiche le menu principal."""
+    \"\"\"Affiche le menu principal.\"\"\"
     keyboard = [
         [InlineKeyboardButton("🏠 Accueil", callback_data='home')],
         [InlineKeyboardButton("📈 Statistiques", callback_data='stats'),
@@ -284,7 +274,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Fonction pour gérer les boutons
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Gère les clics sur les boutons."""
+    \"\"\"Gère les clics sur les boutons.\"\"\"
     query = update.callback_query
     await query.answer()
     
@@ -340,16 +330,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 [InlineKeyboardButton("🔙 Retour", callback_data='games')]
             ]
         },
-        'roll_dice': {
-            'text': '🎲 **Résultat du dé:** {}\\n\\n'
-                   'Voulez-vous rejouer?'.format(__import__('random').randint(1, 6)),
-            'buttons': [
-                [InlineKeyboardButton("🎲 Relancer", callback_data='roll_dice')],
-                [InlineKeyboardButton("🔙 Retour", callback_data='games')]
-            ]
-        },
         'back': {
-            'text': '🤖 **Bienvenue !**\\n'
+            'text': 'ROBOT **Bienvenue !**\\n'
                    'Choisissez une option ci-dessous:',
             'buttons': [
                 [InlineKeyboardButton("📊 Informations", callback_data='info')],
@@ -360,11 +342,26 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         }
     }
     
+    # Gestion du dé
+    if query.data == 'roll_dice':
+        import random
+        dice_result = random.randint(1, 6)
+        await query.edit_message_text(
+            f'🎲 **Résultat du dé:** {dice_result}\\n\\n'
+            f'Voulez-vous rejouer?',
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("🎲 Relancer", callback_data='roll_dice')],
+                [InlineKeyboardButton("🔙 Retour", callback_data='games')]
+            ]),
+            parse_mode='Markdown'
+        )
+        return
+    
     # Réponse par défaut
     if query.data not in responses:
         await query.edit_message_text(
-            f"🔧 Fonction '{query.data}' en cours de développement...\\n\\n"
-            f"Cette fonctionnalité sera bientôt disponible!",
+            f'🔧 Fonction "{query.data}" en cours de développement...\\n\\n'
+            f'Cette fonctionnalité sera bientôt disponible!',
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("🔙 Retour", callback_data='back')]
             ]),
@@ -383,7 +380,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 # Fonction principale
 def main() -> None:
-    """Démarre le bot."""
+    \"\"\"Démarre le bot.\"\"\"
     TOKEN = os.getenv('{token_var}', 'YOUR_BOT_TOKEN')
     
     # Créer l'application
@@ -400,7 +397,26 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-''',
+"""
+
+# Bot code templates
+BOT_TEMPLATES = {
+    "echo": {
+        "name": "Bot Echo Simple",
+        "description": "Bot qui répète tous les messages reçus",
+        "code": get_echo_template(),
+        "features": ["echo", "commands"]
+    },
+    "commands": {
+        "name": "Bot avec Commandes",
+        "description": "Bot avec plusieurs commandes personnalisées",
+        "code": get_commands_template(),
+        "features": ["commands", "responses"]
+    },
+    "buttons": {
+        "name": "Bot avec Boutons Inline",
+        "description": "Bot avec boutons interactifs",
+        "code": get_buttons_template(),
         "features": ["buttons", "interactive"]
     }
 }
@@ -427,12 +443,12 @@ def generate_bot_code(config: BotConfig) -> str:
         custom_commands = []
         for cmd in config.commands:
             if cmd not in ["start", "help"]:
-                custom_commands.append(f'''
+                custom_commands.append(f"""
 # Fonction pour la commande /{cmd}
 async def {cmd}_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Commande personnalisée /{cmd}."""
+    \"\"\"Commande personnalisée /{cmd}.\"\"\"
     await update.message.reply_text(f"Commande /{cmd} exécutée!")
-''')
+""")
         
         if custom_commands:
             # Insérer les commandes personnalisées
